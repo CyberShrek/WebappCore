@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "outDir": "./src/main/webapp/resources/js/built",
+    "moduleResolution": "node",
+    "module": "esnext",
+    "typeRoots": [
+      "./node_modules/@types",
+      "./custom_typings"
+    ]
+  },
+  "include": [
+    "src/main/typescript/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

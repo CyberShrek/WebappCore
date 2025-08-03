@@ -1,0 +1,80 @@
+:root{
+    --report-header-height: 40px;
+}
+
+
+.report {
+    display: flex;
+    flex-direction: column;
+    min-height: var(--report-header-height);
+    background: white;
+    height: min-content;
+    /*     padding: var(--indent); */
+    gap: var(--indent);
+    border-radius: var(--outer-border-radius);
+}
+
+.report > .header {
+    display:flex;
+    width: auto;
+    height: var(--report-header-height);
+    align-items: center;
+    margin: var(--indent);
+    background: var(--solid-color);
+    border-radius: var(--border-radius);
+}
+.report > .header > h2{
+    margin-right: auto;
+    padding: 0 var(--strong-indent);
+}
+.report > .header > img{
+    height: 40px;
+}
+.report > .header > button{
+    height: var(--report-header-height);
+    width: var(--report-header-height);
+    padding: var(--light-indent);
+    background: white;
+    border: 0;
+}
+.report > .header > button > img{
+    /*    height: 10px; */
+}
+
+.report > .body{
+    display: grid;
+    gap: var(--indent);
+}
+
+.report > .body > .content {
+    /*     max-height: 100vh;
+        overflow: auto; */
+    background: white;
+}
+
+.report > .body > .content > .body > .header,
+.report > .body > .content > .header{
+    display: flex;
+    align-items: center;
+    padding: 0 var(--indent);
+    gap: var(--indent);
+}
+.report > .body > .content > .header > :is(h3, a)  {
+    min-width: 300px;
+}
+
+:is(
+.report > .body > .content > .body > .header,
+.report > .body > .content > .header) .configurator > .dropdown {
+    left: 0;
+}
+
+
+.report.editable .content {
+    /*     border-bottom: var(--light-border); */
+    /*     padding-bottom: var(--indent); */
+}
+
+.report > .body > .configurator {
+    margin: var(--indent);
+}

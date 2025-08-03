@@ -1,0 +1,109 @@
+.grid-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: var(--indent);
+}
+
+.grid-wrapper > .header .field {
+    height: auto
+}
+
+.grid {
+    display: grid;
+    grid-gap: var(--indent);
+    align-items: end;
+    justify-items: end;
+}
+
+.header {
+    display: flex;
+    padding: var(--indent);
+    gap: var(--indent);
+    width: auto;
+}
+.header .field {
+    max-width: var(--default-field-width);
+}
+
+.fix {
+    display: flex;
+    opacity: 0.6;
+    position: fixed;
+    z-index: 64;
+    box-shadow: var(--shadow);
+    transition:  opacity 0.3s;
+}
+.fix:hover {
+    opacity: 1;
+}
+.fix.top    { top:    var(--strong-indent) }
+.fix.bottom { bottom: var(--strong-indent) }
+.fix.right   { left:   var(--strong-indent) }
+.fix.right  { right:  var(--strong-indent) }
+
+.fix.framed {
+    flex-wrap: wrap;
+    color: var(--primary-color);
+    padding: var(--indent);
+    background: var(--secondary-color);
+    border: 5px solid var(--primary-color);
+    border-radius: var(--border-radius);
+}
+.fix p{
+    margin: auto var(--indent) auto 0;
+}
+
+.fix button {
+    height: 35px;
+    width: 35px;
+}
+
+
+.modal-backdrop{
+    z-index: 64;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    min-width: 100%;
+/*     margin-bottom: 500px !important; */
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    overflow: auto;
+}
+
+.modal-backdrop > .modal {
+    position: absolute;
+    display: block;
+    top: 10vh;
+    max-width: calc(100vw - var(--strong-indent) * 10);
+    filter: drop-shadow(0 2px 5px);
+    border-radius: var(--border-radius);
+}
+.modal-backdrop > .modal.full-size {
+    width: 100%;
+}
+
+.modal-backdrop .modal > p {
+    font-size: large;
+    margin: var(--strong-indent);
+    color: white;
+}
+
+
+.modal-backdrop .modal::after {
+    content: "";
+    padding: 100vh 1px;
+}
+
+.swal2-title {
+    font-size: 22px;
+}
+
+.modal > body {
+    width: 90vw;
+}

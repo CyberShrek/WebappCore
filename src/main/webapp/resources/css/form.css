@@ -1,0 +1,106 @@
+:root{
+    --default-field-width: 360px;
+    --default-field-height: 80px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 2*var(--indent));
+    gap: var(--indent);
+    padding: var(--indent);
+    border-radius: var(--outer-border-radius);
+}
+
+form .section {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+/*     padding-bottom: var(--indent); */
+    gap: var(--indent);
+}
+
+form .section .grid-wrapper > .header {
+    display: flex;
+    gap: var(--strong-indent);
+    align-items: center;
+/*     font-size: 22px; */
+    font-weight: bold;
+    margin: 0;
+}
+
+form .section > .header > p {
+    min-width: var(--default-field-width);
+}
+
+form .field {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    gap: var(--light-indent);
+    width: 100%;
+}
+
+.field:is(.switch-field, .select-field, .text-field, .calendar-field, .number-field) {
+height: 100%;
+    width: 100%;
+}
+/* .field.switch-field .switch, .field.range-field .range {
+    margin-bottom: auto;
+} */
+.field.number-field :is(.number, .range){
+    display: flex;
+    align-items: center;
+    gap: var(--indent);
+}
+.field.number-field .range > input{
+    width: 100%;
+}
+
+.field > .header {
+    padding: 0;
+    display: flex;
+/*     height: 10px; */
+    justify-content: space-between;
+    align-items: end;
+}
+.field > .header:empty {
+    display: none;
+}
+.field > .header > :is(p, span) {
+    margin: 0;
+    white-space: nowrap;
+    font-weight: normal;
+    font-size: 18px;
+    height: 20px;
+}
+
+.field > p:empty {
+    margin: 0;
+}
+
+.field > label:empty {
+    width: 1px;
+}
+
+.field.wrong :is(.multiselect){
+    outline: thin solid var(--negative-color);
+}
+
+form .message {
+    font-size: medium;
+    font-weight: normal;
+    margin: var(--light-indent) auto 0 auto;
+    filter: saturate(0.7);
+}
+
+
+form > .buttons {
+    display: flex;
+    gap: var(--indent);
+    align-items: end;
+}
+
+form > .buttons button.cancel{
+    margin-right: auto;
+}

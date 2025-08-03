@@ -1,0 +1,80 @@
+body {
+  margin: var(--strong-indent);
+/*   background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
+}
+
+body > .header{
+  margin: var(--strong-indent);
+  display: flex;
+  justify-content: space-between;
+  
+}
+
+.apps {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  padding: var(--strong-indent);
+  gap: var(--strong-indent);
+  background: white;
+  border-radius: var(--outer-border-radius);
+}
+.apps > .list {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 50vh;
+  gap: calc(var(--indent)/2);
+}
+
+.apps > p {
+  margin: 0;
+  font-weight: bold;
+}
+
+.apps > .list > .item{
+  display: flex;
+  align-items: center;
+   gap: var(--strong-indent);
+  padding-bottom: calc(var(--indent)/2);
+  border-bottom: var(--light-border);
+}
+
+.apps > .list > .item > .actions{
+  display: flex;
+  gap: var(--indent);
+  margin-left: auto;
+}
+.apps > .list > .item > .actions > button{
+  width: 25px;
+  font-size: large;
+}
+
+.apps > .list > .item a{
+  font-size: large;
+}
+
+
+.apps > .list > .item button{
+  background: transparent;
+  margin: 0;
+  padding: 0;
+}
+
+.apps > .list > .item button img{
+  height: 20px;
+  background: transparent;
+}
+
+.apps > button {
+  width: max-content;
+  margin-left: auto;
+  font-size: large;
+/*   background: no */
+  padding: 10px 20px;
+}
+
+form {
+  background: white;
+}

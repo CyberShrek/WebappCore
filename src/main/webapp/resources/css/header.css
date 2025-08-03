@@ -1,0 +1,33 @@
+#header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  left: 0;
+}
+
+#header a{
+  text-decoration: none;
+  color: var(--primary-color);
+  font-weight: bold;
+   margin: 0 var(--indent);
+}
+
+#header p{
+  margin-right: auto;
+  margin-left: var(--indent);
+}
+
+#header :is(a, p){
+    font-size: 18px;
+}
+
+#header button{
+  width: 25px;
+  height: 25px;
+  margin: var(--indent);
+}
+
+#header input[type=text]{
+  width: 125px;
+}
