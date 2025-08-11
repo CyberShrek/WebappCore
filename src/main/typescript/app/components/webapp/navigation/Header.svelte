@@ -3,7 +3,7 @@
     import {popupAction, popupList} from "../../../common/util/alert"
     import Button from "../../../common/components/input/Button.svelte"
 
-    export let info: WebappInfo
+    export let info: AppInfo
 
     function showAppInfo(){
         popupList(

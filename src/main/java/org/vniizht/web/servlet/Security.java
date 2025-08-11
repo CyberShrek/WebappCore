@@ -1,7 +1,7 @@
-package org.vniizht.forge.webapp.web.servlet;
+package org.vniizht.web.servlet;
 
-import org.vniizht.forge.webapp.exception.HttpException;
-import org.vniizht.forge.webapp.security.usercheck.UserCheckManager;
+import org.vniizht.exception.HttpException;
+import org.vniizht.security.usercheck.UserCheckManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -1,6 +1,6 @@
-import {SimpleHttp} from "./././simple/SimpleHttp";
-import {serverLocations} from "../properties";
-import {ExportableReport} from "../model/export/ExportableReport";
+import {SimpleHttp} from "./././simple/SimpleHttp"
+import {serverLocations} from "../properties"
+import {ExportableReport} from "../model/export/ExportableReport"
 
 export async function getUser(code?: string): Promise<UserDetails> {
     return SimpleHttp
@@ -9,13 +9,6 @@ export async function getUser(code?: string): Promise<UserDetails> {
         )
         .get(serverLocations.user)
         .json<UserDetails>()
-}
-
-export async function getWebapp(): Promise<WebappDetails> {
-    return SimpleHttp
-        .withHeaders()
-        .get(serverLocations.webapp)
-        .json<WebappDetails>()
 }
 
 export async function downloadReport(report: ExportableReport) {

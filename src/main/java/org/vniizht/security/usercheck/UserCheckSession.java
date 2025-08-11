@@ -1,4 +1,4 @@
-package org.vniizht.forge.webapp.security.usercheck;
+package org.vniizht.security.usercheck;
 
 import javax.naming.NamingException;
 

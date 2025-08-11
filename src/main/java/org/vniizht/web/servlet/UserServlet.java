@@ -1,4 +1,4 @@
-package org.vniizht.forge.webapp.web.servlet;
+package org.vniizht.web.servlet;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

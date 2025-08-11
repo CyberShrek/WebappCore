@@ -1,10 +1,10 @@
-package org.vniizht.forge.webapp.model;
+package org.vniizht.model;
 
 import com.vniizht.ucheck.UserCheckRemote;
 
 import java.util.Arrays;
 
-public class User {
+public class UserDetails {
 
     private final UserCheckRemote remote;
 
@@ -20,7 +20,7 @@ public class User {
     public final boolean load;
     public final boolean download;
 
-    public User(UserCheckRemote remote) throws Exception {
+    public UserDetails(UserCheckRemote remote) throws Exception {
         this.remote = remote;
         this.superUser = permits("create", "read", "update", "delete", "load", "download");
         this.carrier = remote.getSkp();

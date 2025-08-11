@@ -1,7 +1,7 @@
-package org.vniizht.forge.webapp.security.usercheck;
+package org.vniizht.security.usercheck;
 import com.vniizht.ucheck.UserCheckRemote;
-import org.vniizht.forge.webapp.Properties;
-import org.vniizht.forge.webapp.exception.HttpException;
+import org.vniizht.Properties;
+import org.vniizht.exception.HttpException;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
-import static org.vniizht.forge.webapp.Application.WEBAPP;
+import static org.vniizht.Application.AppInfo;
 
 class UserCheck {
 
@@ -21,7 +21,7 @@ class UserCheck {
 
     public boolean applyRequest(HttpServletRequest request) throws HttpException {
         try {
-            String code = WEBAPP != null ? WEBAPP.code : request.getHeader("Code");
+            String code = AppInfo != null ? AppInfo.code : request.getHeader("Code");
 
             remote.setUser(request.getRemoteUser());
             remote.setStatTaskCode(code);

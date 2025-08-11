@@ -1,6 +1,6 @@
-package org.vniizht.forge.webapp.security.usercheck;
+package org.vniizht.security.usercheck;
 
-import org.vniizht.forge.webapp.model.User;
+import org.vniizht.model.UserDetails;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -15,10 +15,10 @@ public class UserCheckManager {
                 .applyRequest(request);
     }
 
-    public static synchronized User getUser(HttpServletRequest request) throws Exception {
+    public static synchronized UserDetails getUser(HttpServletRequest request) throws Exception {
         UserCheck userCheck = getSession(UserCheck.extractIp(request)).userCheck;
         userCheck.applyRequest(request);
-        return new User(userCheck.remote);
+        return new UserDetails(userCheck.remote);
     }
 
     private synchronized static UserCheckSession getSession(String ip) throws Exception {

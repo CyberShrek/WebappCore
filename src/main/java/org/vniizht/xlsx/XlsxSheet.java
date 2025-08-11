@@ -1,4 +1,4 @@
-package org.vniizht.forge.webapp.xlsx;
+package org.vniizht.xlsx;
 
 import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.ss.usermodel.*;
@@ -7,7 +7,7 @@ import org.apache.poi.ss.util.RegionUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.vniizht.forge.webapp.model.Report;
+import org.vniizht.model.Report;
 
 import java.text.SimpleDateFormat;
 import java.util.*;

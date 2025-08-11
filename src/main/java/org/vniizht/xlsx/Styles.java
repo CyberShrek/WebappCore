@@ -1,4 +1,4 @@
-package org.vniizht.forge.webapp.xlsx;
+package org.vniizht.xlsx;
 
 import org.apache.poi.ss.usermodel.*;
 

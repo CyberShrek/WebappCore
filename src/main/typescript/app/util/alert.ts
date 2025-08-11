@@ -1,5 +1,4 @@
 import {SweetAlertModule} from "../../app/third-party/SweetAlertModule"
-import {type} from "os";
 
 const sweet = new SweetAlertModule()
 
@@ -15,12 +14,6 @@ export function popupList(title?: string, list?: (string | { icon: string, text:
     })
 }
 
-export function popupTable(title: string, data: MatrixData){
-    sweet.alert({
-        title,
-        html:`<table>${data.map(rowData => `<tr>${rowData.map(cellData => `<td class="${typeof cellData}">${cellData}</td>`).join("")}</tr>`).join("")}</table>`
-    })
-}
 
 export function popupAction(title?: string, text?: string, confirmButtonText?: string, onConfirm?: () => void){
     sweet.alert({

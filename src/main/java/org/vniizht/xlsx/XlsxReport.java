@@ -1,8 +1,8 @@
-package org.vniizht.forge.webapp.xlsx;
+package org.vniizht.xlsx;
 
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.vniizht.forge.webapp.model.Report;
+import org.vniizht.model.Report;
 
 import java.io.IOException;
 import java.io.OutputStream;

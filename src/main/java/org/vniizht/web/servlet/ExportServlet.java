@@ -1,9 +1,9 @@
-package org.vniizht.forge.webapp.web.servlet;
+package org.vniizht.web.servlet;
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.vniizht.forge.webapp.model.Report;
-import org.vniizht.forge.webapp.xlsx.XlsxReport;
+import org.vniizht.model.Report;
+import org.vniizht.xlsx.XlsxReport;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

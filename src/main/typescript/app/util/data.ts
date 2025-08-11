@@ -3,16 +3,6 @@ export function setOf<T>(...items: T[]): Set<T>{
     return new Set(items)
 }
 
-// Returns a Map of the vararg Pair entries
-export function mapOf<K, V>(...entries: Pair<K, V>[]): Map<K, V>{
-    return new Map(entries.map(entry => [entry.first, entry.second]))
-}
-
-// Returns two arguments as a Pair object
-export function pairOf<F, S>(first: F, second: S): Pair<F, S>{
-    return {first, second}
-}
-
 // Returns a basic number from gotten string if this is possible, or 0 if not
 export function numberOf(word: string|number): number {
     return isNaN(Number(word)) ? 0 : Number(word)
@@ -112,35 +102,9 @@ export function stringifyDate(date: Date): string {
         day = date.getDate()
     return `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`
 }
-export function javaSetToSet(javaSet: string): Set<string>{
-    return setOf(...splitJavaCollection(javaSet))
-}
-export function javaMapToMap(javaMap: string): Map<string, string>{
-    return mapOf(
-        ...splitJavaCollection(javaMap)
-        .map(pair => {
-            const entry = pair.split("=")
-            return pairOf(entry[0], entry[1])
-        })
-    )
-}
-export function splitJavaCollection(javaCollection: string): string[]{
-    return javaCollection
-        .slice(1, -1) // Removing '{' and '}' in the both sides of the string
-        .split(", ")
-}
 
 export function transposeMatrix<T>(matrix: T[][]): T[][]{
     return matrix[0].map((_, i) => matrix.map(row => row[i]))
-}
-
-export function extractJsonItemsWithSuffix(json: {}, suffix: string): {}{
-    const items = {}
-    for (const key in json)
-        if(key.endsWith(suffix))
-            items[key] = json[key]
-
-    return items
 }
 
 export const deepCopyOf = (some: any) => {

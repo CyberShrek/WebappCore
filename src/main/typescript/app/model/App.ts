@@ -1,11 +1,5 @@
-interface WebappDetails {
+interface AppInfo {
     code: string
-    frontend: FrontendConfig
-    dataSource: string
-    info?: WebappInfo
-}
-
-interface WebappInfo {
     name?: string
     groupName?: string
     contextRoot?: string

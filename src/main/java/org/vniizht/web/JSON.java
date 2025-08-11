@@ -1,4 +1,4 @@
-package org.vniizht.forge.webapp.util;
+package org.vniizht.web;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

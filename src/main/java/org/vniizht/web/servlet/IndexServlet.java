@@ -1,6 +1,4 @@
-package org.vniizht.forge.webapp.web.servlet;
-
-import org.vniizht.forge.webapp.util.Resources;
+package org.vniizht.web.servlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
