@@ -98,9 +98,5 @@ form .message {
 form > .buttons {
     display: flex;
     gap: var(--indent);
-    align-items: end;
-}
-
-form > .buttons button.cancel{
-    margin-right: auto;
+    justify-content: end;
 }

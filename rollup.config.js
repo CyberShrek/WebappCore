@@ -9,15 +9,13 @@ import clear from "rollup-plugin-clear";
 
 const
     dev = !!process.env.ROLLUP_WATCH,
-    inputDir = "./src/main/typescript/apps",
+    inputDir = "./src/main/typescript/webapp",
     outputDir = "./src/main/webapp/resources/js/built"
 
 export default  {
-    dev: false,
+    dev: dev,
     input: [
-        `${inputDir}/main/main.ts`,
-        `${inputDir}/webapp/webapp.ts`,
-        `${inputDir}/webapp_editor/webapp_editor.ts`
+        `${inputDir}/webapp.ts`
     ],
     output: [
         {
@@ -28,9 +26,7 @@ export default  {
                 chartjs: ["chart.js"],
                 domtoimage: ["dom-to-image"],
                 sweetAlert2: ["sweetalert2"],
-                easepick: ["@easepick/amp-plugin", "@easepick/core", "@easepick/lock-plugin", "@easepick/range-plugin"],
-                codemirror: ["codemirror"],
-                leaderline: ["leader-line"],
+                easepick: ["@easepick/amp-plugin", "@easepick/core", "@easepick/lock-plugin", "@easepick/range-plugin"]
             }
         }
     ],
