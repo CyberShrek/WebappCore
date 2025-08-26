@@ -9,8 +9,9 @@ public class Application implements ServletContextListener {
 
     public static LocalDate LAUNCH_DATE;
 
-    public static void main(String[] args) {
+    @Override
+    public void contextInitialized(javax.servlet.ServletContextEvent servletContextEvent) {
         LAUNCH_DATE = java.time.LocalDate.now();
-        System.out.println("Initialized");
+        System.out.println("WebApp Initialized");
     }
 }

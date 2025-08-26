@@ -4,87 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.vniizht</groupId>
-    <artifactId>suburbWeb</artifactId>
+    <parent>
+        <groupId>org.vniizht</groupId>
+        <artifactId>WebappParent</artifactId>
+        <version>SNAPSHOT</version>
+    </parent>
+
+    <artifactId>WebappTemplate</artifactId>
     <version>SNAPSHOT</version>
     <packaging>war</packaging>
-
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
-    <dependencies>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.19.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-            <version>4.0.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>4.1.2</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- VNIIZHT -->
-        <dependency>
-            <groupId>com.vniizht</groupId>
-            <artifactId>UCheckRemote</artifactId>
-            <version>1.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.vniizht</groupId>
-            <artifactId>PrilInfoRemote</artifactId>
-            <version>1.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.7.3</version>
-            <scope>runtime</scope>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                <configuration>-->
-<!--                    <source>${java.version}</source>-->
-<!--                    <target>${java.version}</target>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-
-            <!-- Сборка WAR -->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-war-plugin</artifactId>-->
-<!--                <version>3.4.0</version>-->
-<!--                <configuration>-->
-<!--                    <warName>template</warName>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-        </plugins>
-    </build>
 
 </project>
