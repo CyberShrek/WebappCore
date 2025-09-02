@@ -10,7 +10,7 @@ import clear from "rollup-plugin-clear";
 const
     dev = !!process.env.ROLLUP_WATCH,
     inputDir = "./src/main/typescript/webapp",
-    outputDir = "./src/main/webapp/resources/js/built"
+    outputDir = "./src/main/webapp/WEB-RES/js/built"
 
 export default  {
     dev: dev,

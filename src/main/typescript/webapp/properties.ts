@@ -1,5 +1,5 @@
 const rootPath = '/' + document.location.pathname.split('/')[1],
-    resourcesPath = rootPath + '/resources'
+    resourcesPath = rootPath + '/WEB-RES'
 
 export const
 

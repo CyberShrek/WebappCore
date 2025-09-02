@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2017",
-    "outDir": "./src/main/webapp/resources/js/built",
+    "outDir": "./src/main/webapp/WEB-RES/js/built",
     "moduleResolution": "node",
     "module": "esnext",
     "typeRoots": [
