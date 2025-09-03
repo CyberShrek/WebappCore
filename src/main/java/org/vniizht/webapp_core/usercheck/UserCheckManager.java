@@ -1,6 +1,6 @@
-package org.vniizht.webapp.usercheck;
+package org.vniizht.webapp_core.usercheck;
 
-import org.vniizht.webapp.model.UserInfo;
+import org.vniizht.webapp_core.model.UserInfo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;

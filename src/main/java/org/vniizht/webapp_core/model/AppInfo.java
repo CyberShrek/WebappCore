@@ -1,7 +1,7 @@
-package org.vniizht.webapp.model;
+package org.vniizht.webapp_core.model;
 
-import org.vniizht.webapp.Application;
-import org.vniizht.webapp.Properties;
+import org.vniizht.webapp_core.Application;
+import org.vniizht.webapp_core.Properties;
 import org.vniizht.prilinfo.PrilInfoRemote;
 
 import javax.naming.InitialContext;

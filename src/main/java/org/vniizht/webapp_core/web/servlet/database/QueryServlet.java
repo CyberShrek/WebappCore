@@ -1,10 +1,9 @@
-package org.vniizht.webapp.web.servlet.report;
+package org.vniizht.webapp_core.web.servlet.database;
 
-import org.vniizht.webapp.exception.HttpException;
-import org.vniizht.webapp.jdbc.Reports;
-import org.vniizht.webapp.web.servlet.Util;
+import org.vniizht.webapp_core.exception.HttpException;
+import org.vniizht.webapp_core.jdbc.SimpleJdbc;
+import org.vniizht.webapp_core.web.servlet.Util;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,18 +12,16 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
 
-@WebServlet("/report")
-public class ReportServlet extends HttpServlet {
+@WebServlet("/query")
+public class QueryServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, HttpException {
-        String reportId = request.getHeader("Report-Id");
+        String queryId = request.getHeader("Query-Id");
         Map<String, Object> formValues = Util.parseJsonBody(request, response);
         try {
             Util.writeJson(
-                    reportId.equals("sales") ? Reports.getSalesData(formValues)
-                            : reportId.equals("deps") ? Reports.getDepsData(formValues)
-                            : null,
+                    SimpleJdbc.queryWithParams(queryId, formValues),
                     response);
         } catch (SQLException e) {
             throw new HttpException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());

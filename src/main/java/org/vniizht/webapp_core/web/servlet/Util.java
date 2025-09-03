@@ -1,7 +1,7 @@
-package org.vniizht.webapp.web.servlet;
+package org.vniizht.webapp_core.web.servlet;
 
-import org.vniizht.webapp.exception.HttpException;
-import org.vniizht.webapp.web.JSON;
+import org.vniizht.webapp_core.exception.HttpException;
+import org.vniizht.webapp_core.web.JSON;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

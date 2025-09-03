@@ -1,7 +1,7 @@
-package org.vniizht.webapp.web.servlet.details;
+package org.vniizht.webapp_core.web.servlet.details;
 
-import org.vniizht.webapp.model.AppInfo;
-import org.vniizht.webapp.web.servlet.Util;
+import org.vniizht.webapp_core.model.AppInfo;
+import org.vniizht.webapp_core.web.servlet.Util;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

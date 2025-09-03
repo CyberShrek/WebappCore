@@ -1,9 +1,9 @@
-package org.vniizht.webapp.web.servlet.report;
+package org.vniizht.webapp_core.web.servlet.report;
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.vniizht.webapp.model.Report;
-import org.vniizht.webapp.xlsx.XlsxReport;
+import org.vniizht.webapp_core.model.Report;
+import org.vniizht.webapp_core.xlsx.XlsxReport;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

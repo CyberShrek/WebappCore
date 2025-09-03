@@ -1,4 +1,4 @@
-package org.vniizht.webapp.exception;
+package org.vniizht.webapp_core.exception;
 
 import javax.servlet.ServletException;
 

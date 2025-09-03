@@ -1,7 +1,7 @@
-package org.vniizht.webapp.usercheck;
+package org.vniizht.webapp_core.usercheck;
 import com.vniizht.ucheck.UserCheckRemote;
-import org.vniizht.webapp.Properties;
-import org.vniizht.webapp.exception.HttpException;
+import org.vniizht.webapp_core.Properties;
+import org.vniizht.webapp_core.exception.HttpException;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;

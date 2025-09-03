@@ -1,4 +1,4 @@
-package org.vniizht.webapp;
+package org.vniizht.webapp_core;
 
 public abstract class Properties {
 

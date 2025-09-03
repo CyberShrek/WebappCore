@@ -1,4 +1,4 @@
-package org.vniizht.webapp.model;
+package org.vniizht.webapp_core.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 

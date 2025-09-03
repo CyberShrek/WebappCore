@@ -1,4 +1,4 @@
-package org.vniizht.webapp.usercheck;
+package org.vniizht.webapp_core.usercheck;
 
 import javax.naming.NamingException;
 

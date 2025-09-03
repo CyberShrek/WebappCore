@@ -1,4 +1,4 @@
-package org.vniizht.webapp.xlsx;
+package org.vniizht.webapp_core.xlsx;
 
 import org.apache.poi.ss.usermodel.*;
 
