@@ -11,26 +11,32 @@ import java.util.regex.Pattern;
 
 public class SimpleJdbc {
 
-    public static List<List<Object>> queryWithParams(String queryId, Map<String, Object> params) throws SQLException {
-        try (Connection connection = ConnectionPool.getConnection()) {
-            String sql = Resources.load("sql/" + queryId + ".sql");
-            List<String> paramNames = new ArrayList<>();
-            String preparedSql = replaceParams(sql, paramNames);
+    public static boolean isQueryExists(String queryId) {
+        return Resources.exists(getQueryPath(queryId));
+    }
 
-            try (PreparedStatement stmt = connection.prepareStatement(preparedSql)) {
-                setParams(stmt, paramNames, params);
+    public static List<List<Object>> queryWithParams(String queryId, Map<String, Object> params) throws SQLException, IOException {
 
-                try (ResultSet rs = stmt.executeQuery()) {
-                    return resultSetToList(rs);
-                }
+        String sql = Resources.load(getQueryPath(queryId));
+        List<String> paramNames = new ArrayList<>();
+        String preparedSql = replaceParams(sql, paramNames);
+
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(preparedSql)) {
+            setParams(stmt, paramNames, params);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                return resultSetToList(rs);
             }
-        } catch (IOException e) {
-            throw new SQLException("Failed to load query: " + queryId, e);
         }
     }
 
+    private static String getQueryPath(String queryId) {
+        return "/sql/" + queryId + ".sql";
+    }
+
     private static String replaceParams(String sql, List<String> paramNames) {
-        sql = sql.replaceAll("/?", "�");
+        sql = sql.replaceAll("\\?", "�");
         Pattern pattern = Pattern.compile("\\$\\{(\\w+)}");
         java.util.regex.Matcher matcher = pattern.matcher(sql);
         StringBuffer result = new StringBuffer();

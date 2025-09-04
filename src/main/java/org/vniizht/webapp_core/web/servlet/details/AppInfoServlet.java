@@ -1,7 +1,7 @@
 package org.vniizht.webapp_core.web.servlet.details;
 
 import org.vniizht.webapp_core.model.AppInfo;
-import org.vniizht.webapp_core.web.servlet.Util;
+import org.vniizht.webapp_core.web.servlet.SimpleHttp;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +13,6 @@ import java.io.IOException;
 public class AppInfoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Util.writeJson(new AppInfo(), response);
+        SimpleHttp.writeJson(new AppInfo(), response);
     }
 }

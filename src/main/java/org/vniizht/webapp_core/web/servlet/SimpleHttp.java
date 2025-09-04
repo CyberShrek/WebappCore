@@ -10,7 +10,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Util {
+public class SimpleHttp {
 
     /**
      * Parses the JSON body of the HTTP request into a key-value map.
@@ -33,6 +33,7 @@ public class Util {
         else
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
+        setupResponse(response);
         writeText(exception.getMessage(), response);
         exception.printStackTrace();
     }
@@ -61,6 +62,7 @@ public class Util {
     }
 
     private static void write(String contentType, byte[] content, HttpServletResponse response) throws IOException {
+        setupResponse(response);
         response.setContentType(contentType);
         response.setContentLength(content.length);
 
@@ -74,5 +76,9 @@ public class Util {
         OutputStream os = response.getOutputStream();
         os.write(content);
         os.flush();
+    }
+
+    private static void setupResponse(HttpServletResponse response) {
+        response.setCharacterEncoding("UTF-8");
     }
 }

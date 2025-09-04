@@ -2,7 +2,7 @@ package org.vniizht.webapp_core.web.servlet.details;
 
 import org.vniizht.webapp_core.exception.HttpException;
 import org.vniizht.webapp_core.usercheck.UserCheckManager;
-import org.vniizht.webapp_core.web.servlet.Util;
+import org.vniizht.webapp_core.web.servlet.SimpleHttp;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,9 +16,9 @@ public class UserInfoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            Util.writeJson(UserCheckManager.getUser(request), response);
+            SimpleHttp.writeJson(UserCheckManager.getUser(request), response);
         } catch (Exception e) {
-            Util.handleException(new HttpException(HttpServletResponse.SC_FORBIDDEN, e.getMessage()), response);
+            SimpleHttp.handleException(new HttpException(HttpServletResponse.SC_FORBIDDEN, e.getMessage()), response);
         }
     }
 }

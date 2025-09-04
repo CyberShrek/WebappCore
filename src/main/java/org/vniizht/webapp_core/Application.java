@@ -11,7 +11,7 @@ public class Application implements ServletContextListener {
 
     @Override
     public void contextInitialized(javax.servlet.ServletContextEvent servletContextEvent) {
-        LAUNCH_DATE = java.time.LocalDate.now();
         System.out.println("WebApp Initialized");
+        LAUNCH_DATE = java.time.LocalDate.now();
     }
 }
