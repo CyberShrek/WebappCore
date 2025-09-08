@@ -55,7 +55,18 @@ public class SimpleJdbc {
         for (int i = 0; i < paramNames.size(); i++) {
             String paramName = paramNames.get(i);
             Object value = params.get(paramName);
-            stmt.setObject(i + 1, value);
+
+            if (value instanceof java.util.List) {
+                // Преобразуем List в массив
+                java.util.List<?> list = (java.util.List<?>) value;
+                Object[] array = list.toArray();
+
+                // Создаем SQL массив с базовым типом VARCHAR (адаптируйте под вашу БД)
+                java.sql.Array sqlArray = stmt.getConnection().createArrayOf("VARCHAR", array);
+                stmt.setArray(i + 1, sqlArray);
+            } else {
+                stmt.setObject(i + 1, value);
+            }
         }
     }
 
