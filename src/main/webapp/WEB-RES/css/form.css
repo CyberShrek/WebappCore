@@ -37,8 +37,10 @@ form .field {
     display: flex;
     flex-direction: column;
     justify-content: end;
+    justify-self: start;
     gap: var(--light-indent);
     width: 100%;
+    max-width: 25vw;
 }
 
 .field:is(.switch-field, .select-field, .text-field, .calendar-field, .number-field) {

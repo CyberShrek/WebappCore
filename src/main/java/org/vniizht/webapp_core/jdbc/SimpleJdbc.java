@@ -61,7 +61,7 @@ public class SimpleJdbc {
                 java.util.List<?> list = (java.util.List<?>) value;
                 Object[] array = list.toArray();
 
-                // Создаем SQL массив с базовым типом VARCHAR (адаптируйте под вашу БД)
+                // Создаем SQL массив с базовым типом VARCHAR
                 java.sql.Array sqlArray = stmt.getConnection().createArrayOf("VARCHAR", array);
                 stmt.setArray(i + 1, sqlArray);
             } else {
@@ -73,11 +73,17 @@ public class SimpleJdbc {
     private static List<List<Object>> resultSetToList(ResultSet rs) throws SQLException {
         List<List<Object>> result = new ArrayList<>();
         ResultSetMetaData metaData = rs.getMetaData();
-        int columnCount = metaData.getColumnCount();
 
+        // Заголовки столбцов
+        result.add(new ArrayList<>());
+        for (int i = 1; i <= metaData.getColumnCount(); i++) {
+            result.get(0).add(metaData.getColumnName(i));
+        }
+
+        // Строки
         while (rs.next()) {
             List<Object> row = new ArrayList<>();
-            for (int i = 1; i <= columnCount; i++) {
+            for (int i = 1; i <= metaData.getColumnCount(); i++) {
                 row.add(rs.getObject(i));
             }
             result.add(row);
