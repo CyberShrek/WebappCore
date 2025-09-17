@@ -2,7 +2,9 @@ package org.vniizht.webapp_core.xlsx;
 
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.vniizht.webapp_core.model.Report;
+import org.vniizht.webapp_core.model.export.ExportReport;
+import org.vniizht.webapp_core.model.export.Section;
+import org.vniizht.webapp_core.model.export.Table;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -14,19 +16,19 @@ import java.util.stream.Collectors;
 public class XlsxReport
         implements AutoCloseable {
 
-    private final Report report;
+    private final ExportReport report;
     private final XSSFWorkbook workbook;
     private final List<XlsxSheet> sheets = new ArrayList<>();
     private final Styles styles;
 
-    public XlsxReport(Report report) {
+    public XlsxReport(ExportReport report) {
         this.report = report;
 //        report.context.addAll(getTestContext());
         workbook = new XSSFWorkbook();
         styles = new Styles(workbook);
         report.tables.forEach(table -> {
             sheets.add(new XlsxSheet(table,
-                    workbook.createSheet(table.title),
+                    workbook.createSheet(report.title),
                     report.context,
                     styles));
         });
@@ -46,30 +48,30 @@ public class XlsxReport
         workbook.close();
     }
 
-    private Report.Table getContextTable() {
-        Report.Table table = new Report.Table("Выбрано");
+    private Table getContextTable() {
+        Table table = new Table();
         table.head.addAll(getContextHead());
         table.body.addAll(getContextBody());
         return table;
     }
 
-    private List<Report.Table.Row> getContextHead() {
-        List<Report.Table.Row> rows = Arrays.asList(
-                new Report.Table.Row(new ArrayList<>()),
-                new Report.Table.Row(new ArrayList<>()));
+    private List<Table.Row> getContextHead() {
+        List<Table.Row> rows = Arrays.asList(
+                new Table.Row(new ArrayList<>()),
+                new Table.Row(new ArrayList<>()));
 
         report.context.forEach(section -> {
-            Report.Table.Cell firstCell = new Report.Table.Cell(section.title);
+            Table.Cell firstCell = new Table.Cell(section.title);
             firstCell.colspan = section.fields.size();
             rows.get(0).cells.add(firstCell);
             section.fields.forEach(field ->
-                    rows.get(1).cells.add(new Report.Table.Cell(field.title)));
+                    rows.get(1).cells.add(new Table.Cell(field.title)));
         });
         return rows;
     }
 
-    private List<Report.Table.Row> getContextBody() {
-        List<Report.Section.Field> fields = report.context.stream()
+    private List<Table.Row> getContextBody() {
+        List<Section.Field> fields = report.context.stream()
                 .flatMap(section -> section.fields.stream())
                 .collect(Collectors.toList());
 
@@ -79,15 +81,15 @@ public class XlsxReport
                 .max()
                 .orElse(0);
 
-        List<Report.Table.Row> rows = new ArrayList<>(rowsCount);
-        for (Report.Section.Field field : fields) {
+        List<Table.Row> rows = new ArrayList<>(rowsCount);
+        for (Section.Field field : fields) {
             for (int rowI = 0; rowI < rowsCount; rowI++) {
                 if (rows.size() <= rowI) {
-                    rows.add(new Report.Table.Row(new ArrayList<>()));
+                    rows.add(new Table.Row(new ArrayList<>()));
                 }
                 rows.get(rowI).cells.add(
                         !field.values.isEmpty() && rowI < field.values.size()
-                                ? new Report.Table.Cell(field.values.get(rowI))
+                                ? new Table.Cell(field.values.get(rowI))
                                 : null);
             }
         }

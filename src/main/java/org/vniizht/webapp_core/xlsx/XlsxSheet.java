@@ -1,13 +1,17 @@
 package org.vniizht.webapp_core.xlsx;
 
+import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.common.usermodel.HyperlinkType;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.vniizht.webapp_core.model.Report;
+import org.vniizht.webapp_core.model.export.Section;
+import org.vniizht.webapp_core.model.export.Table;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -21,16 +25,16 @@ public class XlsxSheet {
     private final static int HEADER_HEIGHT_IN_POINTS = 25;
     private final static int COLUMN_WIDTH_IN_SYMBOLS = 20;
 
-    private final Report.Table table;
+    private final Table table;
     private final XSSFSheet sheet;
     private final Styles styles;
 
     private final int columnsCount;
     private final List<CellRangeAddress> mergedRegions = new ArrayList<>();
 
-    public XlsxSheet(Report.Table table,
+    public XlsxSheet(Table table,
                      XSSFSheet sheet,
-                     List<Report.Section> context,
+                     List<Section> context,
                      Styles styles) {
         this.table = table;
         this.sheet = sheet;
@@ -64,31 +68,28 @@ public class XlsxSheet {
         resizeColumns(); // Передаём количество столбцов
     }
 
-    private void addContext( List<Report.Section> context){
+    private void addContext( List<Section> context){
 
-        createSingleCellRow(new Report.Table.Cell(CONTEXT_TITLE),
+        createSingleCellRow(new Table.Cell(CONTEXT_TITLE),
                 styles.contextHeaderStyle, HEADER_HEIGHT_IN_POINTS);
 
-        createSingleCellRow(new Report.Table.Cell(new SimpleDateFormat("dd.MM.yyyy HH:mm")
+        createSingleCellRow(new Table.Cell(new SimpleDateFormat("dd.MM.yyyy HH:mm")
                                 .format(new Date())),
                 styles.contextStyle);
 
-        createSingleCellRow(new Report.Table.Cell(table.title),
-                styles.contextHeaderStyle, HEADER_HEIGHT_IN_POINTS);
-
         context.forEach(section -> {
             if (section.title != null && !section.title.isEmpty()) {
-                createSingleCellRow(new Report.Table.Cell(section.title),
+                createSingleCellRow(new Table.Cell(section.title),
                         styles.contextSectionStyle,
                         HEADER_HEIGHT_IN_POINTS);
             }
             section.fields.forEach(field -> {
 
-                Report.Table.Cell cell0 = new Report.Table.Cell(Optional.ofNullable(field.title).orElse(""));
-                Report.Table.Cell cell1 = new Report.Table.Cell(field.getSimpleValues());
+                Table.Cell cell0 = new Table.Cell(Optional.ofNullable(field.title).orElse(""));
+                Table.Cell cell1 = new Table.Cell(field.getSimpleValues());
                 cell1.colspan = columnsCount - 1;
                 XSSFRow xssfRow = createRow(
-                        new Report.Table.Row(Arrays.asList(
+                        new Table.Row(Arrays.asList(
                                 cell0,
                                 cell1
                         )),
@@ -100,20 +101,20 @@ public class XlsxSheet {
             });
         });
 
-        createSingleCellRow(new Report.Table.Cell(),
+        createSingleCellRow(new Table.Cell(),
                 styles.contextHeaderStyle);
     }
 
     private void addSuperHeader() {
-        createSingleCellRow(new Report.Table.Cell(table.title),
+        createSingleCellRow(new Table.Cell(table.title),
                 styles.headerStyle, HEADER_HEIGHT_IN_POINTS);
     }
 
-    private void addRows(List<Report.Table.Row> rows, CellStyle style, int height) {
+    private void addRows(List<Table.Row> rows, CellStyle style, int height) {
         rows.forEach(row -> createRow(row, style, height));
     }
 
-    private XSSFRow createRow(Report.Table.Row row, CellStyle style, int height) {
+    private XSSFRow createRow(Table.Row row, CellStyle style, int height) {
         if (row == null) {
             return null;
         }
@@ -124,35 +125,40 @@ public class XlsxSheet {
         row.cells.forEach(cell -> createCell(cell, style));
         return xssfRow;
     }
-    private XSSFRow createRow(Report.Table.Row row, CellStyle style) {
+    private XSSFRow createRow(Table.Row row, CellStyle style) {
         return createRow(row, style, 0);
     }
 
-    private XSSFRow createSingleCellRow(Report.Table.Cell cell, CellStyle style, int height) {
+    private XSSFRow createSingleCellRow(Table.Cell cell, CellStyle style, int height) {
         cell.colspan = columnsCount;
-        return createRow(new Report.Table.Row(Collections.singletonList(cell)), style, height);
+        return createRow(new Table.Row(Collections.singletonList(cell)), style, height);
     }
-    private XSSFRow createSingleCellRow(Report.Table.Cell cell, CellStyle style) {
+    private XSSFRow createSingleCellRow(Table.Cell cell, CellStyle style) {
         return createSingleCellRow(cell, style, 0);
     }
 
-    private XSSFCell createCell(Report.Table.Cell cell, CellStyle style) {
+    private XSSFCell createCell(Table.Cell cell, CellStyle style) {
         XSSFRow xssfRow = sheet.getRow(sheet.getLastRowNum());
         XSSFCell xssfCell = xssfRow.createCell(getNextCellIndex(xssfRow));
         if (cell == null) {
             xssfCell.setCellStyle(styles.blankStyle);
         } else {
-            xssfCell.setCellValue(cell.value);
             if (cell.type != null) switch (cell.type) {
                 case TEXT:
                     xssfCell.setCellType(CellType.STRING);
+                    xssfCell.setCellValue(cell.value);
                     break;
                 case NUMBER:
                     xssfCell.setCellType(CellType.NUMERIC);
+                    xssfCell.setCellValue(Double.parseDouble(cell.value));
                     break;
                 case BOOLEAN:
                     xssfCell.setCellType(CellType.BOOLEAN);
+                    xssfCell.setCellValue(Boolean.parseBoolean(cell.value));
+                    break;
             }
+            else xssfCell.setCellValue(cell.value);
+
             xssfCell.setCellStyle(style != null ? style
                     : cell.total ? styles.totalStyle
                     : styles.baseStyle);
@@ -213,9 +219,26 @@ public class XlsxSheet {
     }
 
     private void applyOuterBorders() {
-        CellRangeAddress fullRegion = new CellRangeAddress(MARGIN,
-                sheet.getLastRowNum(),
-                MARGIN, columnsCount-1 + MARGIN);
+
+        int firstRow = MARGIN;
+        int lastRow = sheet.getLastRowNum();
+        int firstCol = MARGIN;
+        int lastCol = columnsCount - 1 + MARGIN;
+
+        // Проверяем валидность диапазона
+        if (lastRow < firstRow || lastCol < firstCol) {
+            System.err.println(
+                    "Invalid merged region: " + firstRow + " " + lastRow + " " + firstCol + " " + lastCol
+            );
+            return;
+        }
+
+        CellRangeAddress fullRegion = new CellRangeAddress(
+                firstRow,
+                lastRow,
+                firstCol,
+                lastCol
+        );
         applyBordersToMergedRegion(fullRegion, styles.outerBorderStyleOnly);
     }
 

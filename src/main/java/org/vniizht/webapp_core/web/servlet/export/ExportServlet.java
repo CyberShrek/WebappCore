@@ -1,8 +1,8 @@
-package org.vniizht.webapp_core.web.servlet.report;
+package org.vniizht.webapp_core.web.servlet.export;
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.vniizht.webapp_core.model.Report;
+import org.vniizht.webapp_core.model.export.ExportReport;
 import org.vniizht.webapp_core.xlsx.XlsxReport;
 
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 
-@WebServlet("/report/export")
-public class ReportExportServlet extends HttpServlet {
+@WebServlet("/export")
+public class ExportServlet extends HttpServlet {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -24,9 +24,9 @@ public class ReportExportServlet extends HttpServlet {
         objectMapper.enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS);
 
         // Десериализация JSON
-        Report report = objectMapper.readValue(
+        ExportReport report = objectMapper.readValue(
                 request.getInputStream(),
-                Report.class
+                ExportReport.class
         );
 
         // Настройка HTTP-ответа
