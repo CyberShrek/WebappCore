@@ -1,4 +1,4 @@
-package org.vniizht.webapp_core.model.export;
+package org.vniizht.webapp_core.model.export.report;
 
 import java.util.ArrayList;
 import java.util.List;

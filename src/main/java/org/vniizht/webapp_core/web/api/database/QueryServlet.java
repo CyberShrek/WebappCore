@@ -1,8 +1,8 @@
-package org.vniizht.webapp_core.web.servlet.database;
+package org.vniizht.webapp_core.web.api.database;
 
 import org.vniizht.webapp_core.exception.HttpException;
 import org.vniizht.webapp_core.jdbc.SimpleJdbc;
-import org.vniizht.webapp_core.web.servlet.SimpleHttp;
+import org.vniizht.webapp_core.web.api.SimpleHttp;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-@WebServlet("/query")
+@WebServlet("/api/query")
 public class QueryServlet extends HttpServlet {
 
     @Override

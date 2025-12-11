@@ -2,9 +2,9 @@ package org.vniizht.webapp_core.xlsx;
 
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.vniizht.webapp_core.model.export.ExportReport;
-import org.vniizht.webapp_core.model.export.Section;
-import org.vniizht.webapp_core.model.export.Table;
+import org.vniizht.webapp_core.model.export.DocumentExport;
+import org.vniizht.webapp_core.model.export.report.Section;
+import org.vniizht.webapp_core.model.export.report.Table;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -16,12 +16,12 @@ import java.util.stream.Collectors;
 public class XlsxReport
         implements AutoCloseable {
 
-    private final ExportReport report;
+    private final DocumentExport report;
     private final XSSFWorkbook workbook;
     private final List<XlsxSheet> sheets = new ArrayList<>();
     private final Styles styles;
 
-    public XlsxReport(ExportReport report) {
+    public XlsxReport(DocumentExport report) {
         this.report = report;
 //        report.context.addAll(getTestContext());
         workbook = new XSSFWorkbook();

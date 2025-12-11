@@ -1,4 +1,4 @@
-package org.vniizht.webapp_core.web.servlet;
+package org.vniizht.webapp_core.web.api;
 
 import org.vniizht.webapp_core.exception.HttpException;
 import org.vniizht.webapp_core.web.JSON;

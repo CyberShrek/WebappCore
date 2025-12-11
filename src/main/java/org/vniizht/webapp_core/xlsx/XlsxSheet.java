@@ -10,8 +10,8 @@ import org.apache.poi.ss.util.RegionUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.vniizht.webapp_core.model.export.Section;
-import org.vniizht.webapp_core.model.export.Table;
+import org.vniizht.webapp_core.model.export.report.Section;
+import org.vniizht.webapp_core.model.export.report.Table;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -144,7 +144,7 @@ public class XlsxSheet {
             xssfCell.setCellStyle(styles.blankStyle);
         } else {
             if (cell.type != null) switch (cell.type) {
-                case TEXT:
+                case STRING:
                     xssfCell.setCellType(CellType.STRING);
                     xssfCell.setCellValue(cell.value);
                     break;

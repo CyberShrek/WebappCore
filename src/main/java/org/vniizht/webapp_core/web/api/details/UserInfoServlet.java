@@ -1,8 +1,8 @@
-package org.vniizht.webapp_core.web.servlet.details;
+package org.vniizht.webapp_core.web.api.details;
 
 import org.vniizht.webapp_core.exception.HttpException;
 import org.vniizht.webapp_core.usercheck.UserCheckManager;
-import org.vniizht.webapp_core.web.servlet.SimpleHttp;
+import org.vniizht.webapp_core.web.api.SimpleHttp;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/userinfo")
+@WebServlet("/api/userinfo")
 public class UserInfoServlet extends HttpServlet {
 
     @Override

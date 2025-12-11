@@ -1,4 +1,4 @@
-package org.vniizht.webapp_core.model.export;
+package org.vniizht.webapp_core.model.export.report;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
@@ -43,7 +43,7 @@ public class Table {
     }
 
     public enum ColumnType {
-        TEXT, NUMBER, BOOLEAN;
+        STRING, NUMBER, BOOLEAN;
 
         @JsonCreator
         public static ColumnType fromString(String value) {
