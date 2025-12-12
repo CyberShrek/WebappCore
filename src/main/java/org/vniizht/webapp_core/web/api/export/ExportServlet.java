@@ -3,7 +3,7 @@ package org.vniizht.webapp_core.web.api.export;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.vniizht.webapp_core.model.export.DocumentExport;
-import org.vniizht.webapp_core.xlsx.XlsxReport;
+import org.vniizht.webapp_core.xlsx.XlsxDocument;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,9 +34,9 @@ public class ExportServlet extends HttpServlet {
         response.setHeader("Content-Disposition", "attachment; filename=" + report.title + ".xlsx");
 
         // Запись файла в выходной поток
-        try (XlsxReport xlsxReport = new XlsxReport(report);
+        try (XlsxDocument xlsxDocument = new XlsxDocument(report);
              OutputStream out = response.getOutputStream()) {
-            xlsxReport.write(out);
+            xlsxDocument.write(out);
             out.flush();
         }
     }

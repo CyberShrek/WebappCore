@@ -10,8 +10,6 @@ import org.apache.poi.ss.util.RegionUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.vniizht.webapp_core.model.export.report.Section;
-import org.vniizht.webapp_core.model.export.report.Table;
 
 import java.text.SimpleDateFormat;
 import java.util.*;

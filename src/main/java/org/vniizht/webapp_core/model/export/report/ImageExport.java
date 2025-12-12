@@ -1,4 +1,8 @@
 package org.vniizht.webapp_core.model.export.report;
 
-public class ImageExport {
+import lombok.ToString;
+
+@ToString
+public class ImageExport extends ReportExport {
+    public String dataURL;
 }

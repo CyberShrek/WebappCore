@@ -1,13 +1,14 @@
 package org.vniizht.webapp_core.model.export;
 
-import org.vniizht.webapp_core.model.export.form.FormExport;
-import org.vniizht.webapp_core.model.export.report.ContentExport;
+import lombok.ToString;
+import org.vniizht.webapp_core.model.export.report.ReportExport;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+@ToString
 public class DocumentExport {
     public String title;
-    public FormExport form;
-    public List<ContentExport> report;
+    public Map<String, Map<String, String>> form;
+    public List<ReportExport> report;
 }
