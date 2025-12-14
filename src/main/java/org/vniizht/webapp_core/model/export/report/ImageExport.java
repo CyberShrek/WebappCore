@@ -4,5 +4,5 @@ import lombok.ToString;
 
 @ToString
 public class ImageExport extends ReportExport {
-    public String dataURL;
+    public String base64;
 }

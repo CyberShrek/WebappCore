@@ -1,6 +1,9 @@
 package org.vniizht.webapp_core.model.export.report;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.util.List;
@@ -10,6 +13,7 @@ public class TableExport extends ReportExport {
     public List<ColumnType> types;
     public List<List<Cell>> head;
     public List<List<Cell>> body;
+    public List<List<Cell>> foot;
 
     public enum ColumnType {
         STRING, NUMBER, BOOLEAN;
@@ -21,6 +25,9 @@ public class TableExport extends ReportExport {
     }
 
     @ToString
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Cell {
         public String  value;
         public Integer colspan;

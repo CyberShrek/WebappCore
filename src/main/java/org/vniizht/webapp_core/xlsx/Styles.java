@@ -4,6 +4,11 @@ import org.apache.poi.ss.usermodel.*;
 
 public class Styles {
 
+    public final static int MARGIN = 1;
+    public final static int TABLE_CELL_HEIGHT_IN_POINTS = 25;
+    public final static int COLUMN_WIDTH_IN_SYMBOLS = 20;
+
+
     public final static String
             FONT_NAME = "Arial Cyr";
 
@@ -19,47 +24,52 @@ public class Styles {
 
     private final Workbook  workbook;
 
-    public final CellStyle blankStyle;
-    public final CellStyle baseStyle;
-    public final CellStyle headerStyle;
-    public final CellStyle totalStyle;
-    public final CellStyle contextStyle;
-    public final CellStyle contextHeaderStyle;
-    public final CellStyle contextSectionStyle;
-    public final CellStyle contextFieldStyle;
-    public final CellStyle outerBorderStyleOnly;
+    public final CellStyle blank;
+    public final CellStyle tableBody;
+    public final CellStyle tableHead;
+    public final CellStyle tableFoot;
+    public final CellStyle imageTitle;
+    public final CellStyle italic;
+    public final CellStyle topHeader;
+    public final CellStyle sectionTitle;
+    public final CellStyle field;
+    public final BorderStyle outerBorder;
 
     public Styles(Workbook workbook) {
         this.workbook = workbook;
 
-        blankStyle = createStyle(BLANK_COLOR, null, null);
+        blank = createStyle(BLANK_COLOR, null, null);
 
-        baseStyle = createStyle(BASE_BORDER,
+        tableBody = createStyle(BASE_BORDER,
                 createFont(10));
-        baseStyle.setVerticalAlignment(VerticalAlignment.TOP);
+        tableBody.setVerticalAlignment(VerticalAlignment.TOP);
 
-        headerStyle = createStyle(ACCENT_COLOR, BASE_BORDER,
+        tableHead = createStyle(ACCENT_COLOR, BASE_BORDER,
                 createFont(10, BLANK_COLOR, FontModes.BOLD));
-        headerStyle.setAlignment(HorizontalAlignment.CENTER);
-        headerStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        tableHead.setAlignment(HorizontalAlignment.CENTER);
+        tableHead.setVerticalAlignment(VerticalAlignment.CENTER);
 
-        totalStyle  = createStyle(BASE_BORDER,
+        tableFoot = createStyle(BASE_BORDER,
                 createFont(10, FontModes.BOLD));
 
-        contextStyle = createStyle(
+        imageTitle = createStyle(ACCENT_COLOR, BorderStyle.NONE,
+                createFont(10, BLANK_COLOR, FontModes.BOLD));
+
+        italic = createStyle(
                 createFont(8, FontModes.ITALIC));
 
-        contextHeaderStyle = createStyle(
+        topHeader = createStyle(
                 createFont(11, FontModes.BOLD));
 
-        contextSectionStyle = createStyle(
+        sectionTitle = createStyle(
                 createFont(11, ACCENT_COLOR, FontModes.BOLD));
 
-        contextFieldStyle = createStyle(
+        field = createStyle(
                 createFont(10));
 
-        outerBorderStyleOnly = workbook.createCellStyle();
-        applyBorders(outerBorderStyleOnly, OUTER_BORDER);
+        CellStyle outerBorderStyle = workbook.createCellStyle();
+        applyBorders(outerBorderStyle, OUTER_BORDER);
+        outerBorder = outerBorderStyle.getBorderTop();
     }
 
 

@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
+        use      = JsonTypeInfo.Id.NAME,
+        include  = JsonTypeInfo.As.PROPERTY,
         property = "type"
 )
 @JsonSubTypes({
@@ -14,15 +14,5 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = TableExport.class, name = "table")
 })
 public abstract class ReportExport {
-    public Type   type;
     public String title;
-
-    public enum Type {
-        IMAGE, TABLE;
-
-        @JsonCreator
-        public static Type fromString(String value) {
-            return valueOf(value.toUpperCase());
-        }
-    }
 }

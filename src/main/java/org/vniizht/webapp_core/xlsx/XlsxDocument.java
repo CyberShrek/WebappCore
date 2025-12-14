@@ -1,38 +1,41 @@
 package org.vniizht.webapp_core.xlsx;
 
-
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.vniizht.webapp_core.model.export.DocumentExport;
-
+import org.vniizht.webapp_core.model.export.report.ImageExport;
+import org.vniizht.webapp_core.model.export.report.ReportExport;
+import org.vniizht.webapp_core.model.export.report.TableExport;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
-public class XlsxDocument
-        implements AutoCloseable {
+public class XlsxDocument implements AutoCloseable {
 
-    private final DocumentExport report;
-    private final XSSFWorkbook workbook;
-    private final List<XlsxSheet> sheets = new ArrayList<>();
-    private final Styles styles;
+    private final Workbook workbook;
+    private final Styles   styles;
 
-    public XlsxDocument(DocumentExport report) {
-        this.report = report;
-//        report.context.addAll(getTestContext());
+    public XlsxDocument(DocumentExport document) {
+
         workbook = new XSSFWorkbook();
-        styles = new Styles(workbook);
-//        report.tables.forEach(table -> {
-//            sheets.add(new XlsxSheet(table,
-//                    workbook.createSheet(report.title),
-//                    report.context,
-//                    styles));
-//        });
-        sheets.add(new XlsxSheet(getContextTable(),
-                workbook.createSheet("Контекст"),
-                null,
-                styles));
+        styles   = new Styles(workbook);
+
+        XlsxSheet sheet = new XlsxSheet(workbook.createSheet(document.title), styles);
+        sheet.setColumnCount(determineColumnCount(document));
+
+        sheet.new Form(document.title, document.form);
+        document.report.forEach(content -> {
+            if (content.getClass().equals(TableExport.class))
+                sheet.new Table((TableExport) content);
+            else if (content.getClass().equals(ImageExport.class)) {
+                sheet.new Image((ImageExport) content);
+            }
+            else
+                throw new IllegalArgumentException("Unknown report content type: " + content.getClass().getName());
+        });
+        sheet.applyOuterBorders();
+
     }
 
     public void write(OutputStream out) throws IOException {
@@ -45,52 +48,16 @@ public class XlsxDocument
         workbook.close();
     }
 
-    private Table getContextTable() {
-        Table table = new Table();
-        table.head.addAll(getContextHead());
-        table.body.addAll(getContextBody());
-        return table;
-    }
+    private static int determineColumnCount(DocumentExport document) {
+        int columnCount = 0;
 
-    private List<Table.Row> getContextHead() {
-        List<Table.Row> rows = Arrays.asList(
-                new Table.Row(new ArrayList<>()),
-                new Table.Row(new ArrayList<>()));
-
-//        report.context.forEach(section -> {
-//            Table.Cell firstCell = new Table.Cell(section.title);
-//            firstCell.colspan = section.fields.size();
-//            rows.get(0).cells.add(firstCell);
-//            section.fields.forEach(field ->
-//                    rows.get(1).cells.add(new Table.Cell(field.title)));
-//        });
-        return rows;
-    }
-
-    private List<Table.Row> getContextBody() {
-//        List<Section.Field> fields = report.context.stream()
-//                .flatMap(section -> section.fields.stream())
-//                .collect(Collectors.toList());
-
-//        int rowsCount = fields
-//                .stream()
-//                .mapToInt(field -> field.values.isEmpty() ? 0 : field.values.size())
-//                .max()
-//                .orElse(0);
-//
-//        List<Table.Row> rows = new ArrayList<>(rowsCount);
-//        for (Section.Field field : fields) {
-//            for (int rowI = 0; rowI < rowsCount; rowI++) {
-//                if (rows.size() <= rowI) {
-//                    rows.add(new Table.Row(new ArrayList<>()));
-//                }
-//                rows.get(rowI).cells.add(
-//                        !field.values.isEmpty() && rowI < field.values.size()
-//                                ? new Table.Cell(field.values.get(rowI))
-//                                : null);
-//            }
-//        }
-//        return rows;
-        return new ArrayList<>();
+        for(ReportExport content : document.report) {
+            if (content.getClass().equals(TableExport.class)) {
+                List<TableExport.Cell> firstRow = ((TableExport) content).body.get(0);
+                if (firstRow != null && firstRow.size() > columnCount)
+                    columnCount = firstRow.size();
+            }
+        }
+        return columnCount;
     }
 }
