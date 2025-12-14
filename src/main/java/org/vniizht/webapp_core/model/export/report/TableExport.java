@@ -13,7 +13,6 @@ public class TableExport extends ReportExport {
     public List<ColumnType> types;
     public List<List<Cell>> head;
     public List<List<Cell>> body;
-    public List<List<Cell>> foot;
 
     public enum ColumnType {
         STRING, NUMBER, BOOLEAN;

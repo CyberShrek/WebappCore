@@ -31,7 +31,7 @@ public class ExportServlet extends HttpServlet {
 
         // Настройка HTTP-ответа
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setHeader("Content-Disposition", "attachment; filename=" + report.title + ".xlsx");
+        response.setHeader("Content-Disposition", "attachment");
 
         // Запись файла в выходной поток
         try (XlsxDocument xlsxDocument = new XlsxDocument(report);

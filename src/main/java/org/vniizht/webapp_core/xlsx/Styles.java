@@ -51,6 +51,7 @@ public class Styles {
 
         tableFoot = createStyle(BASE_BORDER,
                 createFont(10, FontModes.BOLD));
+        tableFoot.setVerticalAlignment(VerticalAlignment.TOP);
 
         imageTitle = createStyle(ACCENT_COLOR, BorderStyle.NONE,
                 createFont(10, BLANK_COLOR, FontModes.BOLD));

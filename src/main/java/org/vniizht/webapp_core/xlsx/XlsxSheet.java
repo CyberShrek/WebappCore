@@ -65,7 +65,8 @@ class XlsxSheet {
                 if (!section.isEmpty())
                     nextRow(section, styles.sectionTitle);
                 fields.forEach((field, value) -> {
-                    nextRow(field + ": " + value, styles.field);
+                    if (!value.isEmpty())
+                        nextRow(field + ": " + value, styles.field);
                 });
                 nextRow("",     styles.blank);
             });
@@ -79,23 +80,30 @@ class XlsxSheet {
         Table(TableExport table) {
             types = table.types;
             nextRow(table.title, styles.tableHead).setHeightInPoints(Styles.TABLE_CELL_HEIGHT_IN_POINTS);
-            buildSection(table.head, styles.tableHead, false);
-            buildSection(table.body, styles.tableBody, true );
-            buildSection(table.foot, styles.tableFoot, true );
+            buildHead(table.head);
+            buildBody(table.body);
         }
 
-        private void buildSection(List<List<TableExport.Cell>> section, CellStyle style, boolean setTypes) {
-            section.forEach(row -> {
+        private void buildHead(List<List<TableExport.Cell>> head) {
+            head.forEach(row -> {
                 nextRow().setHeightInPoints(Styles.TABLE_CELL_HEIGHT_IN_POINTS);
+                row.forEach(value -> nextCell(value, styles.tableHead));
+            });
+        }
+
+        private void buildBody(List<List<TableExport.Cell>> body) {
+            body.forEach(row -> {
+                nextRow().setHeightInPoints(Styles.TABLE_CELL_HEIGHT_IN_POINTS);
+                boolean isTotal = false;
                 for (int i = 0; i < row.size(); i++) {
-                    Cell cell = nextCell(row.get(i), style);
-                    if (setTypes){
+                    if (row.get(i) != null && row.get(i).value.equals("Итого"))
+                        isTotal = true;
+                    Cell cell = nextCell(row.get(i), isTotal ? styles.tableFoot : styles.tableBody);
                         switch (types.get(i)){
                             case STRING: break;
                             case NUMBER: cell.setCellType(CellType.NUMERIC); break;
                             case BOOLEAN: cell.setCellType(CellType.BOOLEAN); break;
                         }
-                    }
                 }
             });
         }
