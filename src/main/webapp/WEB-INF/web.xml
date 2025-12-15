@@ -16,6 +16,10 @@
         <filter-name>htmlExtensionFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>yourServlet</servlet-name>-->
+<!--        <url-pattern>/api/*</url-pattern>-->
+<!--    </servlet-mapping>-->
 
     <security-constraint>
         <display-name>Ограничение1</display-name>

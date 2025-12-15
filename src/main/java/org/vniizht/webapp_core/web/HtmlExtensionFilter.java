@@ -7,8 +7,14 @@ import java.io.IOException;
 public class HtmlExtensionFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws IOException, ServletException {
+
         HttpServletRequest request = (HttpServletRequest) req;
         String path = request.getServletPath();
+
+        if (path.startsWith("/api/")) {
+            chain.doFilter(req, res);
+            return;
+        }
 
         if (path.matches("^/[^.]*$")) {
             RequestDispatcher rd = request.getRequestDispatcher(path + ".html");
