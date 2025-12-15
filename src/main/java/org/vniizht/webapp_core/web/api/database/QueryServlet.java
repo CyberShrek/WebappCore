@@ -23,7 +23,7 @@ public class QueryServlet extends HttpServlet {
             }
             Map<String, Object> formValues = SimpleHttp.parseJsonBody(request, response);
             SimpleHttp.writeJson(
-                    SimpleJdbc.queryWithParams(queryId, formValues),
+                    SimpleJdbc.forApp(SimpleHttp.getAppCode(request)).queryWithParams(queryId, formValues),
                     response);
 
         } catch (Exception e) {

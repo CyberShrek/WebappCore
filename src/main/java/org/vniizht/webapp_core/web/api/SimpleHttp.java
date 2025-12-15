@@ -10,7 +10,11 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SimpleHttp {
+public abstract class SimpleHttp {
+
+    public static String getAppCode(HttpServletRequest request) {
+        return request.getHeader("App-Code");
+    }
 
     /**
      * Parses the JSON body of the HTTP request into a key-value map.

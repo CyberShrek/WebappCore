@@ -1,0 +1,5 @@
+{
+  "APP_CODE": {
+    "datasource-jndi": "java:/ModelsDS"
+  }
+}

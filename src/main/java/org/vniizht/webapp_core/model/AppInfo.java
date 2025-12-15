@@ -1,7 +1,7 @@
 package org.vniizht.webapp_core.model;
 
 import org.vniizht.webapp_core.Application;
-import org.vniizht.webapp_core.Properties;
+import org.vniizht.webapp_core.Configuration;
 import org.vniizht.prilinfo.PrilInfoRemote;
 
 import javax.naming.InitialContext;
@@ -10,8 +10,8 @@ import java.util.Optional;
 
 public class AppInfo {
 
-    public final String code                = Properties.APPLICATION_CODE;
-    Map<String, Object> prilInfo            = getPrilInfo(code);
+    public final String code;
+    public final Map<String, Object> prilInfo;
     public final String name                = safeGet("zadname");
     public final String contextRoot         = safeGet("comstr");
     public final String groupName           = safeGet("zadnameV");
@@ -27,13 +27,15 @@ public class AppInfo {
     public final String[] tables            = safeGetArray("pril_tables");
     public final String instructionPath     = safeGet("instrstr");
 
-    public AppInfo() {
+    public AppInfo(String code) {
+        this.code = code;
+        this.prilInfo = getPrilInfo(code);
     }
 
     private static Map<String, Object> getPrilInfo(String code) {
         try {
             PrilInfoRemote remote = (PrilInfoRemote) new InitialContext()
-                    .lookup(Properties.PRIL_INFO_REMOTE_NAME);
+                    .lookup(Configuration.PRIL_INFO_REMOTE_NAME);
 
             return remote.info(code);
         } catch (Exception e) {

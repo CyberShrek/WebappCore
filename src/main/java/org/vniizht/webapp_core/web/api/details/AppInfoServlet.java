@@ -13,6 +13,6 @@ import java.io.IOException;
 public class AppInfoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        SimpleHttp.writeJson(new AppInfo(), response);
+        SimpleHttp.writeJson(new AppInfo(SimpleHttp.getAppCode(request)), response);
     }
 }

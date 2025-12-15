@@ -1,32 +1,40 @@
 package org.vniizht.webapp_core.jdbc;
 
+import lombok.AllArgsConstructor;
 import org.vniizht.webapp_core.Resources;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 
-public class SimpleJdbc {
+public abstract class SimpleJdbc {
 
     public static boolean isQueryExists(String queryId) {
         return Resources.exists(getQueryPath(queryId));
     }
 
-    public static List<List<Object>> queryWithParams(String queryId, Map<String, Object> params) throws SQLException, IOException {
+    private final static Map<String, App> appJdbs = new HashMap<>();
+    public static App forApp(String appCode) {
+        if (!appJdbs.containsKey(appCode)) {
+            appJdbs.put(appCode, new App(appCode));
+        }
+        return appJdbs.get(appCode);
+    }
 
-        String sql = Resources.load(getQueryPath(queryId));
-        List<String> paramNames = new ArrayList<>();
-        String preparedSql = replaceParams(sql, paramNames);
-
-        try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(preparedSql)) {
-            setParams(stmt, paramNames, params);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                return resultSetToList(rs);
+    @AllArgsConstructor
+    public static class App {
+        final String appCode;
+        public List<List<Object>> queryWithParams(String queryId, Map<String, Object> params) throws SQLException, IOException {
+            String sql = Resources.load(getQueryPath(queryId));
+            List<String> paramNames = new ArrayList<>();
+            String preparedSql = replaceParams(sql, paramNames);
+            try (Connection connection = ConnectionPool.getConnection(appCode);
+                 PreparedStatement stmt = connection.prepareStatement(preparedSql)) {
+                setParams(stmt, paramNames, params);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    return resultSetToList(rs);
+                }
             }
         }
     }
