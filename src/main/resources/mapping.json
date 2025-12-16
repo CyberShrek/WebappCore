@@ -1,0 +1,10 @@
+{
+  "/app": {
+    "datasource-jndi": "java:/ModelsDS",
+    "page": "index.html"
+  },
+  "/": {
+    "datasource-jndi": "java:/ModelsDS",
+    "page": "index.html"
+  }
+}

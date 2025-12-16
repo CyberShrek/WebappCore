@@ -1,6 +1,6 @@
 package org.vniizht.webapp_core.jdbc;
 
-import org.vniizht.webapp_core.Configuration;
+import org.vniizht.webapp_core.Mapping;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -18,19 +18,19 @@ public abstract class ConnectionPool {
         try {
             Context initContext = new InitialContext();
 
-            for (String appCode : Configuration.getAppCodes()) {
-                appDataSources.put(appCode, (DataSource) initContext.lookup(Configuration.getDatasourceJNDI(appCode)));
+            for (String appPath : Mapping.getMappings()) {
+                appDataSources.put(appPath, (DataSource) initContext.lookup(Mapping.getDatasourceJNDI(appPath)));
             }
         } catch (NamingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static Connection getConnection(String appCode) throws SQLException {
-        DataSource dataSource = appDataSources.get(appCode);
+    public static Connection getConnection(String appPath) throws SQLException {
+        DataSource dataSource = appDataSources.get(appPath);
         if (dataSource == null) {
-            throw new SQLException("Datasource not found: " + appCode);
+            throw new SQLException("Datasource not found: " + appPath);
         }
-        return appDataSources.get(appCode).getConnection();
+        return appDataSources.get(appPath).getConnection();
     }
 }

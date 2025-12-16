@@ -1,7 +1,6 @@
 package org.vniizht.webapp_core.model;
 
 import org.vniizht.webapp_core.Application;
-import org.vniizht.webapp_core.Configuration;
 import org.vniizht.prilinfo.PrilInfoRemote;
 
 import javax.naming.InitialContext;
@@ -51,7 +50,7 @@ public class AppInfo {
     private static Map<String, Object> getPrilInfo(String code) {
         try {
             PrilInfoRemote remote = (PrilInfoRemote) new InitialContext()
-                    .lookup(Configuration.PRIL_INFO_REMOTE_NAME);
+                    .lookup(Application.PRIL_INFO_REMOTE_NAME);
 
             return Optional.ofNullable(remote.info(code)).orElse(new HashMap<>());
         } catch (Exception e) {

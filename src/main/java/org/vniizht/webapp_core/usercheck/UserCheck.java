@@ -1,6 +1,7 @@
 package org.vniizht.webapp_core.usercheck;
 import com.vniizht.ucheck.UserCheckRemote;
-import org.vniizht.webapp_core.Configuration;
+import org.vniizht.webapp_core.Application;
+import org.vniizht.webapp_core.Mapping;
 import org.vniizht.webapp_core.exception.HttpException;
 import org.vniizht.webapp_core.web.api.SimpleHttp;
 
@@ -16,7 +17,7 @@ class UserCheck {
     public final UserCheckRemote remote;
 
     UserCheck() throws NamingException {
-        remote = (UserCheckRemote) new InitialContext().lookup(Configuration.USER_CHECK_REMOTE_NAME);
+        remote = (UserCheckRemote) new InitialContext().lookup(Application.USER_CHECK_REMOTE_NAME);
     }
 
     public boolean applyRequest(HttpServletRequest request) throws HttpException {
