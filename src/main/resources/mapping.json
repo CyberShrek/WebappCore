@@ -1,10 +1,12 @@
 {
-  "/app": {
+  "/passengers": {
+    "code": "CORRESPWEB",
     "datasource-jndi": "java:/ModelsDS",
-    "page": "index.html"
+    "page": "/index_pass.html"
   },
-  "/": {
+  "/baggages": {
+    "code": "ESUBR02",
     "datasource-jndi": "java:/ModelsDS",
-    "page": "index.html"
+    "page": "/index_bagg.html"
   }
 }

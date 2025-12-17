@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public abstract class SimpleHttp {
 
@@ -62,7 +63,7 @@ public abstract class SimpleHttp {
     }
 
     private static void write(String contentType, String content, HttpServletResponse response) throws IOException {
-        write(contentType, content.getBytes("UTF-8"), response);
+        write(contentType, Optional.ofNullable(content).orElse("").getBytes("UTF-8"), response);
     }
 
     private static void write(String contentType, byte[] content, HttpServletResponse response) throws IOException {

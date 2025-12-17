@@ -18,19 +18,19 @@ public abstract class ConnectionPool {
         try {
             Context initContext = new InitialContext();
 
-            for (String appPath : Mapping.getMappings()) {
-                appDataSources.put(appPath, (DataSource) initContext.lookup(Mapping.getDatasourceJNDI(appPath)));
+            for (String mapping : Mapping.getMappings()) {
+                appDataSources.put(mapping, (DataSource) initContext.lookup(Mapping.getDatasourceJNDI(mapping)));
             }
         } catch (NamingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static Connection getConnection(String appPath) throws SQLException {
-        DataSource dataSource = appDataSources.get(appPath);
+    public static Connection getConnection(String appCode) throws SQLException {
+        DataSource dataSource = appDataSources.get(Mapping.findByCode(appCode));
         if (dataSource == null) {
-            throw new SQLException("Datasource not found: " + appPath);
+            throw new SQLException("Datasource not found: " + appCode);
         }
-        return appDataSources.get(appPath).getConnection();
+        return dataSource.getConnection();
     }
 }

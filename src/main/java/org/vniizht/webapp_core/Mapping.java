@@ -37,6 +37,15 @@ public abstract class Mapping {
         return "";
     }
 
+    public static String findByCode(String appCode) {
+        for (Map.Entry<String, Map<String, String>> entry : appProperties.entrySet()) {
+            if (entry.getValue().get("code").equals(appCode)) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
     static void load() {
         try {
             JSON.parse(Resources.load("mapping.json")).forEach((mapping, properties) -> {
