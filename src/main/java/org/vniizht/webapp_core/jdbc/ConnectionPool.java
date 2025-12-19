@@ -14,11 +14,14 @@ import java.util.Map;
 public abstract class ConnectionPool {
     private static final Map<String, DataSource> appDataSources = new HashMap<>();
 
-    static {
+    public static void init() {
         try {
             Context initContext = new InitialContext();
 
+            System.out.println("Available mappings: ");
             for (String mapping : Mapping.getMappings()) {
+                System.out.println("Mapping: " + mapping);
+                System.out.println("Datasource: " + Mapping.getDatasourceJNDI(mapping));
                 appDataSources.put(mapping, (DataSource) initContext.lookup(Mapping.getDatasourceJNDI(mapping)));
             }
         } catch (NamingException e) {
@@ -29,7 +32,7 @@ public abstract class ConnectionPool {
     public static Connection getConnection(String appCode) throws SQLException {
         DataSource dataSource = appDataSources.get(Mapping.findByCode(appCode));
         if (dataSource == null) {
-            throw new SQLException("Datasource not found: " + appCode);
+            throw new SQLException("Datasource not found for app " + appCode);
         }
         return dataSource.getConnection();
     }

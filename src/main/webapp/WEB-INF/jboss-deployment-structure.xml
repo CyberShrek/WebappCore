@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure>
+    <deployment>
+        <dependencies>
+            <module name="org.apache.poi.poi" export="true" slot="4.1.2"/>
+            <module name="org.apache.poi.poi-ooxml" export="true" slot="4.1.2"/>
+            <module name="org.apache.poi.poi-ooxml-schemas" export="true" slot="4.1.2"/>
+            <module name="org.apache.xmlbeans.xmlbeans" export="true" slot="3.1.0"/>
+            <module name="org.apache.commons.commons-lang3" export="true" slot="main"/>
+            <module name="org.apache.commons.fileupload" export="true" slot="main"/>
+
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>

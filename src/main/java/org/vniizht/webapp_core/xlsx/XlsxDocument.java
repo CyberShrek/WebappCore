@@ -8,7 +8,6 @@ import org.vniizht.webapp_core.model.export.report.ReportExport;
 import org.vniizht.webapp_core.model.export.report.TableExport;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Base64;
 import java.util.List;
 
 public class XlsxDocument implements AutoCloseable {

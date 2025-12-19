@@ -36,6 +36,9 @@ class XlsxSheet {
     }
 
     void applyOuterBorders() {
+        if (sheet.getLastRowNum() < MARGIN || columnCount < MARGIN )
+            return;
+
         CellRangeAddress region = new CellRangeAddress(
                 MARGIN,
                 sheet.getLastRowNum(),
