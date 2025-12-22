@@ -34,7 +34,7 @@ public class XlsxDocument implements AutoCloseable {
                 throw new IllegalArgumentException("Unknown report content type: " + content.getClass().getName());
         });
         sheet.applyOuterBorders();
-
+        sheet.resize();
     }
 
     public void write(OutputStream out) throws IOException {

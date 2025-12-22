@@ -6,7 +6,6 @@ public class Styles {
 
     public final static int MARGIN = 1;
     public final static int TABLE_CELL_HEIGHT_IN_POINTS = 25;
-    public final static int COLUMN_WIDTH_IN_SYMBOLS = 20;
 
 
     public final static String

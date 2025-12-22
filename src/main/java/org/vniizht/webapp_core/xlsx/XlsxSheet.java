@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import static org.vniizht.webapp_core.xlsx.Styles.COLUMN_WIDTH_IN_SYMBOLS;
 import static org.vniizht.webapp_core.xlsx.Styles.MARGIN;
 
 class XlsxSheet {
@@ -31,8 +30,12 @@ class XlsxSheet {
 
     void setColumnCount(Integer columnCount) {
         this.columnCount = columnCount;
-        for (int i = MARGIN; i < columnCount + MARGIN; i++)
-            sheet.setColumnWidth(i, COLUMN_WIDTH_IN_SYMBOLS * 256);
+    }
+
+    void resize() {
+        for (int i = MARGIN; i < columnCount + MARGIN; i++) {
+            sheet.autoSizeColumn(i);
+        }
     }
 
     void applyOuterBorders() {
@@ -101,12 +104,11 @@ class XlsxSheet {
                 for (int i = 0; i < row.size(); i++) {
                     if (row.get(i) != null && row.get(i).value.equals("Итого"))
                         isTotal = true;
-                    Cell cell = nextCell(row.get(i), isTotal ? styles.tableFoot : styles.tableBody);
-                        switch (types.get(i)){
-                            case STRING: break;
-                            case NUMBER: cell.setCellType(CellType.NUMERIC); break;
-                            case BOOLEAN: cell.setCellType(CellType.BOOLEAN); break;
-                        }
+                    Cell cell = nextCell(row.get(i),
+                            isTotal ? styles.tableFoot : styles.tableBody,
+                              types.get(i) == TableExport.ColumnType.NUMBER  ? CellType.NUMERIC
+                            : types.get(i) == TableExport.ColumnType.BOOLEAN ? CellType.BOOLEAN
+                                                                             : CellType.STRING);
                 }
             });
         }
@@ -160,7 +162,8 @@ class XlsxSheet {
         }
 
         protected Cell lastCell;
-        protected Cell nextCell(TableExport.Cell cell, CellStyle style) {
+        protected Cell nextCell(TableExport.Cell cell, CellStyle style) {return nextCell(cell, style, CellType.STRING);}
+        protected Cell nextCell(TableExport.Cell cell, CellStyle style, CellType type) {
 
             lastCell = lastRow.createCell(Math.max(lastRow.getLastCellNum(), MARGIN));
             lastCell.setCellStyle(style);
@@ -168,7 +171,11 @@ class XlsxSheet {
             if (cell == null)
                 return lastCell;
 
-            lastCell.setCellValue(cell.value);
+            lastCell.setCellType(type);
+            if (type == CellType.NUMERIC && cell.value.matches("-?\\d+(\\.\\d+)?"))
+                lastCell.setCellValue(Double.parseDouble(cell.value));
+            else
+                lastCell.setCellValue(cell.value);
 
             if (cell.colspan != null)
                 setColspan(lastCell, cell.colspan);
