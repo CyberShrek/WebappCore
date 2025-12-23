@@ -85,9 +85,10 @@ class XlsxSheet {
 
         Table(TableExport table) {
             types = table.types;
-            nextRow(table.title, styles.tableHead).setHeightInPoints(Styles.TABLE_CELL_HEIGHT_IN_POINTS);
+            nextRow(table.title, styles.tableHead, table.head.get(0).size()).setHeightInPoints(Styles.TABLE_CELL_HEIGHT_IN_POINTS);
             buildHead(table.head);
             buildBody(table.body);
+            resize();
         }
 
         private void buildHead(List<List<TableExport.Cell>> head) {
@@ -104,7 +105,7 @@ class XlsxSheet {
                 for (int i = 0; i < row.size(); i++) {
                     if (row.get(i) != null && row.get(i).value.equals("Итого"))
                         isTotal = true;
-                    Cell cell = nextCell(row.get(i),
+                    nextCell(row.get(i),
                             isTotal ? styles.tableFoot : styles.tableBody,
                               types.get(i) == TableExport.ColumnType.NUMBER  ? CellType.NUMERIC
                             : types.get(i) == TableExport.ColumnType.BOOLEAN ? CellType.BOOLEAN
@@ -154,10 +155,11 @@ class XlsxSheet {
             nextCell(cell, style);
             return row;
         }
-        protected Row nextRow(String value, CellStyle style) {
+        protected Row nextRow(String value, CellStyle style) { return nextRow(value, style, columnCount);}
+        protected Row nextRow(String value, CellStyle style, int colspan) {
             return nextRow(TableExport.Cell.builder()
                     .value(value)
-                    .colspan(columnCount)
+                    .colspan(colspan)
                     .build(), style);
         }
 
