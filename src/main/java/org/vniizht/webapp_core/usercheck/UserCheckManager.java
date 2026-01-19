@@ -10,13 +10,13 @@ public class UserCheckManager {
     static final HashMap<String, UserCheckSession> sessionsMap = new HashMap<>(); // Key is IP
 
     public static synchronized boolean check(HttpServletRequest request) throws Exception {
-        return getSession(UserCheck.extractIp(request))
+        return getSession(UserCheck.extractSafeIp(request))
                 .userCheck
                 .applyRequest(request);
     }
 
     public static synchronized UserInfo getUser(HttpServletRequest request) throws Exception {
-        UserCheck userCheck = getSession(UserCheck.extractIp(request)).userCheck;
+        UserCheck userCheck = getSession(UserCheck.extractSafeIp(request)).userCheck;
         userCheck.applyRequest(request);
         return new UserInfo(userCheck.remote);
     }

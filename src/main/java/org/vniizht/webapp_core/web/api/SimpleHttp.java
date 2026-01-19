@@ -1,6 +1,5 @@
 package org.vniizht.webapp_core.web.api;
 
-import com.fasterxml.jackson.core.io.JsonStringEncoder;
 import org.vniizht.webapp_core.exception.HttpException;
 import org.vniizht.webapp_core.web.JSON;
 
@@ -15,10 +14,11 @@ import java.util.Optional;
 public abstract class SimpleHttp {
 
     public static String getAppCode(HttpServletRequest request) {
-        return new String(
-                JsonStringEncoder
-                        .getInstance()
-                        .quoteAsString(request.getHeader("App-Code")));
+        String appCode = request.getHeader("App-Code");
+        if (appCode == null || !appCode.matches("^[a-zA-Z0-9]+$")) {
+            throw new IllegalArgumentException("Invalid AppCode");
+        }
+        return appCode;
     }
 
     /**
@@ -39,6 +39,8 @@ public abstract class SimpleHttp {
     public static void handleException(Exception exception, HttpServletResponse response) throws IOException {
         if(exception instanceof HttpException)
             response.setStatus(((HttpException) exception).getCode());
+        else if (exception instanceof IllegalArgumentException)
+            response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
         else
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 

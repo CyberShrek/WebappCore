@@ -11,7 +11,6 @@ import java.util.Optional;
 
 public class AppInfo {
 
-    public final String code;
     public final Map<String, Object> prilInfo;
     public final String name;
     public final String contextRoot;
@@ -29,7 +28,6 @@ public class AppInfo {
     public final String instructionPath;
 
     public AppInfo(String code) {
-        this.code = code;
         this.prilInfo = getPrilInfo(code);
         name                = safeGet("zadname");
         contextRoot         = safeGet("comstr");

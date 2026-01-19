@@ -1,5 +1,4 @@
 package org.vniizht.webapp_core.usercheck;
-import com.fasterxml.jackson.core.io.JsonStringEncoder;
 import com.vniizht.ucheck.UserCheckRemote;
 import org.vniizht.webapp_core.Application;
 import org.vniizht.webapp_core.Mapping;
@@ -26,7 +25,7 @@ class UserCheck {
             remote.setUser(request.getRemoteUser());
             remote.setStatTaskCode(SimpleHttp.getAppCode(request));
             remote.setTaskCode(SimpleHttp.getAppCode(request));
-            remote.setIp(extractIp(request));
+            remote.setIp(extractSafeIp(request));
             return remote.check();
         } catch (Exception e) {
             throw new HttpException(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
@@ -38,12 +37,19 @@ class UserCheck {
         remote.remove();
     }
 
-    public static String extractIp(HttpServletRequest request) {
-        return new String(JsonStringEncoder
-                .getInstance()
-                .quoteAsString(
-                        Optional.ofNullable(request.getHeader("X-Real-IP"))
-                                .orElse(Optional.ofNullable(request.getHeader("X-Forwarded-For"))
-                                .orElse(request.getRemoteAddr()))));
+    public static String extractSafeIp(HttpServletRequest request) {
+        String ip = Optional.ofNullable(request.getHeader("X-Forwarded-For"))
+                .map(h -> h.split(",")[0].trim())
+                .orElse(request.getRemoteAddr());
+
+        // Оставляем только символы IP-адреса
+        ip = ip.replaceAll("[^0-9.:]", "");
+
+        // Простая проверка IPv4
+        if (!ip.matches("^(\\d{1,3}\\.){3}\\d{1,3}$")) {
+            return "0.0.0.0";
+        }
+
+        return ip;
     }
 }
