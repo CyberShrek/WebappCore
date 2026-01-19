@@ -1,4 +1,5 @@
 package org.vniizht.webapp_core.usercheck;
+import com.fasterxml.jackson.core.io.JsonStringEncoder;
 import com.vniizht.ucheck.UserCheckRemote;
 import org.vniizht.webapp_core.Application;
 import org.vniizht.webapp_core.Mapping;
@@ -38,8 +39,11 @@ class UserCheck {
     }
 
     public static String extractIp(HttpServletRequest request) {
-        return Optional.ofNullable(request.getHeader("X-Real-IP"))
-                .orElse(Optional.ofNullable(request.getHeader("X-Forwarded-For"))
-                        .orElse(request.getRemoteAddr()));
+        return new String(JsonStringEncoder
+                .getInstance()
+                .quoteAsString(
+                        Optional.ofNullable(request.getHeader("X-Real-IP"))
+                                .orElse(Optional.ofNullable(request.getHeader("X-Forwarded-For"))
+                                .orElse(request.getRemoteAddr()))));
     }
 }

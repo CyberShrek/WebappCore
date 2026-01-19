@@ -1,5 +1,6 @@
 package org.vniizht.webapp_core.web.api;
 
+import com.fasterxml.jackson.core.io.JsonStringEncoder;
 import org.vniizht.webapp_core.exception.HttpException;
 import org.vniizht.webapp_core.web.JSON;
 
@@ -14,7 +15,10 @@ import java.util.Optional;
 public abstract class SimpleHttp {
 
     public static String getAppCode(HttpServletRequest request) {
-        return request.getHeader("App-Code");
+        return new String(
+                JsonStringEncoder
+                        .getInstance()
+                        .quoteAsString(request.getHeader("App-Code")));
     }
 
     /**
@@ -45,12 +49,12 @@ public abstract class SimpleHttp {
 
     // Writes text to the response
     public static void writeText(String text, HttpServletResponse response) throws IOException {
-        write("text/plain", text, response);
+        write("text/plain;charset=UTF-8", text, response);
     }
 
     // Parses object into JSON and writes it to the response
     public static void writeJson(Object object, HttpServletResponse response) throws IOException {
-        write("application/json", JSON.stringify(object), response);
+        write("application/json;charset=UTF-8", JSON.stringify(object), response);
     }
 
     private static void write(String contentType, String content, HttpServletResponse response) throws IOException {
