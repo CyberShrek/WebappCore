@@ -53,15 +53,6 @@ public abstract class SimpleHttp {
         write("application/json", JSON.stringify(object), response);
     }
 
-    public static void writeHtml(String html, HttpServletResponse response) throws IOException {
-        write("text/html", html, response);
-    }
-
-    private static String getFileExtension(String path) {
-        int dotIndex = path.lastIndexOf('.');
-        return (dotIndex == -1) ? "" : path.substring(dotIndex + 1).toLowerCase();
-    }
-
     private static void write(String contentType, String content, HttpServletResponse response) throws IOException {
         write(contentType, Optional.ofNullable(content).orElse("").getBytes("UTF-8"), response);
     }
@@ -71,13 +62,6 @@ public abstract class SimpleHttp {
         response.setContentType(contentType);
         response.setContentLength(content.length);
 
-        // Критически важные заголовки для шрифтов
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Timing-Allow-Origin", "*");
-
-        // Оптимизация кэширования
-        response.setHeader("Cache-Control", "public, max-age=31536000, immutable");
-
         OutputStream os = response.getOutputStream();
         os.write(content);
         os.flush();
@@ -85,5 +69,12 @@ public abstract class SimpleHttp {
 
     private static void setupResponse(HttpServletResponse response) {
         response.setCharacterEncoding("UTF-8");
+        response.setHeader("X-Content-Type-Options", "nosniff");
+        response.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self'");
+
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Timing-Allow-Origin", "*");
+
+        response.setHeader("Cache-Control", "public, max-age=31536000, immutable");
     }
 }
