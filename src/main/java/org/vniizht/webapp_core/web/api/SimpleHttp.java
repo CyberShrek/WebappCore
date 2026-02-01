@@ -45,13 +45,8 @@ public abstract class SimpleHttp {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
         setupResponse(response);
-        writeText(exception.getMessage(), response);
+        writeJson(exception.getMessage(), response);
         exception.printStackTrace();
-    }
-
-    // Writes text to the response
-    public static void writeText(String text, HttpServletResponse response) throws IOException {
-        write("text/plain;charset=UTF-8", text, response);
     }
 
     // Parses object into JSON and writes it to the response
