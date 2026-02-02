@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class Application implements ServletContextListener {
 
     public static final String USER_CHECK_REMOTE_NAME = "java:global/UCheck-1.0/UserCheck!com.vniizht.ucheck.UserCheckRemote";
-    public static final String PRIL_INFO_REMOTE_NAME = "java:global/prilinfo-1.0/PrilInfo!org.vniizht.prilinfo.PrilInfoRemote";
+    public static final String PRIL_INFO_REMOTE_NAME  = "java:global/prilinfo-1.0/PrilInfo!org.vniizht.prilinfo.PrilInfoRemote";
 
     public static LocalDate LAUNCH_DATE;
     public static String CONTEXT_ROOT;

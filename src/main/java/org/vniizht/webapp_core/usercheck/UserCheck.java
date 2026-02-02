@@ -1,9 +1,8 @@
 package org.vniizht.webapp_core.usercheck;
 import com.vniizht.ucheck.UserCheckRemote;
 import org.vniizht.webapp_core.Application;
-import org.vniizht.webapp_core.Mapping;
 import org.vniizht.webapp_core.exception.HttpException;
-import org.vniizht.webapp_core.web.api.SimpleHttp;
+import org.vniizht.webapp_core.web.api.HandyHttp;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -23,8 +22,8 @@ class UserCheck {
     public boolean applyRequest(HttpServletRequest request) throws HttpException {
         try {
             remote.setUser(request.getRemoteUser());
-            remote.setStatTaskCode(SimpleHttp.getAppCode(request));
-            remote.setTaskCode(SimpleHttp.getAppCode(request));
+            remote.setStatTaskCode(HandyHttp.getAppCode(request));
+            remote.setTaskCode(HandyHttp.getAppCode(request));
             remote.setIp(extractSafeIp(request));
             return remote.check();
         } catch (Exception e) {

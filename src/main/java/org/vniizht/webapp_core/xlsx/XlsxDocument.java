@@ -13,7 +13,7 @@ import java.util.List;
 public class XlsxDocument implements AutoCloseable {
 
     private final Workbook workbook;
-    private final Styles   styles;
+    private final Styles   styles  ;
 
     public XlsxDocument(DocumentExport document) {
 

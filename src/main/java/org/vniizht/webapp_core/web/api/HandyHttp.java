@@ -7,11 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public abstract class SimpleHttp {
+public abstract class HandyHttp {
 
     public static String getAppCode(HttpServletRequest request) {
         String appCode = request.getHeader("App-Code");
@@ -45,7 +46,7 @@ public abstract class SimpleHttp {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
         setupResponse(response);
-        writeJson(exception.getMessage(), response);
+        writeText(exception.getMessage(), response);
         exception.printStackTrace();
     }
 
@@ -54,27 +55,52 @@ public abstract class SimpleHttp {
         write("application/json;charset=UTF-8", JSON.stringify(object), response);
     }
 
-    private static void write(String contentType, String content, HttpServletResponse response) throws IOException {
-        write(contentType, Optional.ofNullable(content).orElse("").getBytes("UTF-8"), response);
+    public static void writeText(String text, HttpServletResponse response) throws IOException {
+        write("text/plain;charset=UTF-8", text, response);
     }
 
-    private static void write(String contentType, byte[] content, HttpServletResponse response) throws IOException {
+    private static void write(String contentType, String content, HttpServletResponse response) throws IOException {
+        String safeContent = Optional.ofNullable(content).orElse("")
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&#x27;")
+                .replace("/", "&#x2F;");
+
+        byte[] bytes = safeContent.getBytes(StandardCharsets.UTF_8);
+
         setupResponse(response);
         response.setContentType(contentType);
-        response.setContentLength(content.length);
+        response.setContentLength(bytes.length);
 
         OutputStream os = response.getOutputStream();
-        os.write(content);
+        os.write(bytes);
         os.flush();
     }
 
     private static void setupResponse(HttpServletResponse response) {
         response.setCharacterEncoding("UTF-8");
-        response.setHeader("X-Content-Type-Options", "nosniff");
-        response.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self'");
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Timing-Allow-Origin", "*");
+        // Важные заголовки безопасности
+        response.setHeader("X-Content-Type-Options", "nosniff");
+
+        // Усиленная CSP политика
+        response.setHeader("Content-Security-Policy",
+                "default-src 'self'; " +
+                        "script-src 'self'; " +
+                        "style-src 'self' 'unsafe-inline'; " +
+                        "img-src 'self' data:; " +
+                        "font-src 'self'; " +
+                        "object-src 'none'; " +
+                        "frame-src 'none'; " +
+                        "base-uri 'self'; " +
+                        "form-action 'self';");
+
+        // Заголовки для защиты от XSS
+        response.setHeader("X-XSS-Protection", "1; mode=block");
+        response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+        response.setHeader("X-Frame-Options", "DENY");
 
         response.setHeader("Cache-Control", "public, max-age=31536000, immutable");
     }

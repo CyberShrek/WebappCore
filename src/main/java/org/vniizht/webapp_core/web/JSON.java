@@ -10,15 +10,17 @@ import java.util.Map;
 
 public class JSON {
 
+    private static final ObjectMapper mapper = new ObjectMapper();
+
     public static Map<String, Object> parse(String json) throws JsonProcessingException {
-        return new ObjectMapper().readValue(json, new TypeReference<Map<String, Object>>() {});
+        return mapper.readValue(json, new TypeReference<Map<String, Object>>() {});
     }
 
     public static Map<String, Object> parse(InputStream jsonStream) throws IOException {
-        return new ObjectMapper().readValue(jsonStream, new TypeReference<Map<String, Object>>() {});
+        return mapper.readValue(jsonStream, new TypeReference<Map<String, Object>>() {});
     }
 
     public static String stringify(Object object) throws JsonProcessingException {
-        return new ObjectMapper().writeValueAsString(object);
+        return mapper.writeValueAsString(object);
     }
 }

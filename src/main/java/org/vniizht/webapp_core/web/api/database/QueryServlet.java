@@ -1,8 +1,8 @@
 package org.vniizht.webapp_core.web.api.database;
 
 import org.vniizht.webapp_core.exception.HttpException;
-import org.vniizht.webapp_core.jdbc.SimpleJdbc;
-import org.vniizht.webapp_core.web.api.SimpleHttp;
+import org.vniizht.webapp_core.jdbc.HandyJdbc;
+import org.vniizht.webapp_core.web.api.HandyHttp;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,16 +18,16 @@ public class QueryServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             String queryId = request.getHeader("Query-Id");
-            if (!SimpleJdbc.isQueryExists(queryId)) {
+            if (!HandyJdbc.isQueryExists(queryId)) {
                 throw new HttpException(HttpServletResponse.SC_NOT_FOUND, "Query not found: " + queryId);
             }
-            Map<String, Object> formValues = SimpleHttp.parseJsonBody(request, response);
-            SimpleHttp.writeJson(
-                    SimpleJdbc.forApp(SimpleHttp.getAppCode(request)).queryWithParams(queryId, formValues),
+            Map<String, Object> formValues = HandyHttp.parseJsonBody(request, response);
+            HandyHttp.writeJson(
+                    HandyJdbc.forApp(HandyHttp.getAppCode(request)).queryWithParams(queryId, formValues),
                     response);
 
         } catch (Exception e) {
-            SimpleHttp.handleException(e, response);
+            HandyHttp.handleException(e, response);
         }
     }
 }
